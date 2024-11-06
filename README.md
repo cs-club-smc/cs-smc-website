@@ -31,5 +31,4 @@ Any changes made to the code will reflect immediately on the website.
 
 
 ## Contributing
-
-
+To start contributing to this project as a member of the CS Club at SMC, please read [CONTRIBUTING.md](./CONTRIBUTING.md)
