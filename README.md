@@ -6,7 +6,7 @@ A website for the CS Club at SMC.
 Requirements to deploy and run this project
 - [Node.js v17 or higher.](https://nodejs.org/en/about/previous-releases)
 - [Npm latest release](https://www.npmjs.com/)
-  
+
 ### Installation (For MacOS/LINUX)
 First, enter the directory the project will be stored and then clone the project
 ```BASH
@@ -27,7 +27,7 @@ npm run dev
 
 Any changes made to the code will reflect immediately on the website.
 
-## Built with 
+## Built with
 
 
 ## Contributing
