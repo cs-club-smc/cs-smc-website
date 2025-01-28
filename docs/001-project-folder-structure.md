@@ -1,4 +1,4 @@
-# ADR-005: Component Organization Structure
+# ADR-001: Component Organization Structure
 
 - Status: Proposed
 - Date: [2025-01-27]
