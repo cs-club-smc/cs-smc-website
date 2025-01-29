@@ -1,0 +1,5 @@
+name = "cs-club-smc-gh-actions-worker"
+main = "./src/main.ts"
+compatibility_date = "2025-01-28"
+account_id = "dcd0d2136a4373080a207137ab328aa7"
+workers_dev = true
