@@ -1,4 +1,4 @@
-# ADR-001: Component Organization Structure
+# ADR-001: Project Folder Structure
 
 - Status: Proposed
 - Date: [2025-01-27]
@@ -106,7 +106,7 @@ src/
    - Layout components for consistent site structure
    - Shared components used across multiple routes
 2. **UI Components** (`components/ui/`)
-   - shadcn component library integration
+   - shadcn component library integration or other design systems - if applicable
    - Consistent design system implementation
 3. **Shared Components** (`components/shared/`)
    - Reusable utility components
