@@ -21,7 +21,7 @@ We will organize components in a hierarchical structure that clearly separates d
 
 ```
 src/
-├── app/                                # Next.js app directory
+├── app/                                # App directory
 │   ├── page.tsx                       # Home page
 │   ├── layout.tsx                     # Root layout
 │   ├── _components/                   # Shared components across app routes
