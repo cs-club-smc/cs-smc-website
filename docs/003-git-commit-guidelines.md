@@ -103,6 +103,28 @@ git push origin your-branch-name
 git branch
 ```
 
+### What if I mess up & want to start over?
+
+For undoing a commit, you have several options depending on your specific situation.
+
+1. I've stagged a commit that I like the changes, but want to change the commit message or which changes get pushed:
+
+Ex:
+
+```bash
+src/lib/console/utils.ts # File I want
+src/lib/console/types.ts # File I want
+src/lib/console/index.ts # File I want
+src/app/page.tsx                  # File I want for another commit
+src/app/someOtherRoute/page.tsx   # File I want for another commit
+```
+
+To reset the commit message:
+
+```bash
+git reset Head # This unstages everything but keeps the changes
+```
+
 ### Pro Tips for Beginners
 
 1. **Use `git status` frequently** - It's your best friend for seeing what's changed
