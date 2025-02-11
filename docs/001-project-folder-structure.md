@@ -21,70 +21,94 @@ We will organize components in a hierarchical structure that clearly separates d
 
 ```
 src/
-├── app/                                # App directory
-│   ├── page.tsx                       # Home page
-│   ├── layout.tsx                     # Root layout
-│   ├── _components/                   # Shared components across app routes
-│   │   ├── layout/
-│   │   │   ├── Header/               # Site header with navigation
-│   │   │   ├── Footer/               # Site footer
-│   │   │   └── Sidebar/              # Optional sidebar for member areas
-│   │   └── shared/
-│   │       ├── EventCard/            # Reusable event display component
-│   │       ├── MemberCard/           # Member profile display component
-│   │       └── ProjectShowcase/      # Project display component
+├── components/                         # Shared components
+│   ├── layout/                        # Layout components
+│   │   ├── Header/                    # Site header with navigation
+│   │   │   ├── Header.tsx
+│   │   │   ├── Header.styles.ts
+│   │   │   └── Header.test.tsx
+│   │   ├── Footer/                    # Site footer
+│   │   └── Sidebar/                   # Optional sidebar
 │   │
-│   ├── events/                       # Events section
-│   │   ├── page.tsx                  # Events listing page
-│   │   ├── [eventId]/               # Dynamic event pages
-│   │   │   └── page.tsx
-│   │   └── _components/             # Event-specific components
-│   │       ├── EventCalendar/
-│   │       └── EventRegistration/
+│   └── shared/                        # Reusable components
+│       ├── EventCard/                 # Event display component
+│       ├── MemberCard/                # Member profile component
+│       └── ProjectShowcase/           # Project display component
+│
+├── features/                          # Feature-based modules
+│   ├── events/                        # Events feature
+│   │   ├── components/               # Event-specific components
+│   │   │   ├── EventCalendar/
+│   │   │   └── EventRegistration/
+│   │   ├── hooks/                    # Event-related hooks
+│   │   ├── services/                 # Event-related services
+│   │   ├── store/                    # Event state management
+│   │   ├── types/                    # Event type definitions
+│   │   └── routes/                   # Event routes
+│   │       ├── EventList.tsx         # Events listing
+│   │       └── EventDetail.tsx       # Single event view
 │   │
-│   ├── projects/                     # Projects section
-│   │   ├── page.tsx                  # Projects listing page
-│   │   ├── [projectId]/             # Individual project pages
-│   │   │   └── page.tsx
-│   │   └── _components/             # Project-specific components
-│   │       ├── ProjectGallery/
-│   │       └── ProjectSubmission/
+│   ├── projects/                     # Projects feature
+│   │   ├── components/
+│   │   │   ├── ProjectGallery/
+│   │   │   └── ProjectSubmission/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   ├── store/
+│   │   ├── types/
+│   │   └── routes/
 │   │
-│   ├── members/                      # Members section
-│   │   ├── page.tsx                  # Members directory
-│   │   ├── [memberId]/              # Member profiles
-│   │   │   └── page.tsx
-│   │   └── _components/             # Member-specific components
-│   │       ├── MemberDirectory/
-│   │       └── ProfileEditor/
+│   ├── members/                      # Members feature
+│   │   ├── components/
+│   │   │   ├── MemberDirectory/
+│   │   │   └── ProfileEditor/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   ├── store/
+│   │   ├── types/
+│   │   └── routes/
 │   │
-│   └── resources/                    # Learning resources section
-│       ├── page.tsx                  # Resources landing page
-│       ├── [categoryId]/            # Resource categories
-│       │   └── page.tsx
-│       └── _components/             # Resource-specific components
-│           ├── ResourceCard/
-│           └── TutorialViewer/
+│   └── resources/                    # Resources feature
+│       ├── components/
+│       │   ├── ResourceCard/
+│       │   └── TutorialViewer/
+│       ├── hooks/
+│       ├── services/
+│       ├── store/
+│       ├── types/
+│       └── routes/
 │
 ├── lib/                              # Shared utilities and helpers
-│   ├── types/                        # TypeScript type definitions
-│   │   ├── event.types.ts
-│   │   ├── member.types.ts
-│   │   └── project.types.ts
+│   ├── api/                         # API client configuration
+│   │   ├── client.ts
+│   │   └── endpoints.ts
 │   │
-│   ├── utils/                        # Utility functions
+│   ├── hooks/                       # Shared custom hooks
+│   │   ├── useAuth.ts
+│   │   └── useForm.ts
+│   │
+│   ├── utils/                       # Utility functions
 │   │   ├── date-helpers.ts
 │   │   └── validation.ts
 │   │
-│   └── constants/                    # App-wide constants
+│   └── constants/                   # App-wide constants
 │       ├── routes.ts
 │       └── config.ts
 │
-├── styles/                           # Global styles
-│   ├── globals.scss
-│   └── variables.scss
+├── styles/                          # Global styles
+│   ├── global.ts                    # Global styled-components
+│   ├── theme.ts                     # Theme configuration
+│   └── mixins.ts                    # Styled-components mixins
 │
-└── public/                           # Static assets
+├── types/                           # Global TypeScript types
+│   ├── common.ts
+│   └── api.ts
+│
+├── routes/                          # Application routing
+│   ├── RouteConfig.tsx              # Route definitions
+│   └── PrivateRoute.tsx            # Auth wrapper
+│
+└── assets/                          # Static assets
     ├── images/
     │   ├── logo.svg
     │   └── icons/
@@ -111,6 +135,29 @@ src/
 3. **Shared Components** (`components/shared/`)
    - Reusable utility components
    - Common interface elements
+
+### Why are there different hook folders?
+
+#### Global Hooks (/lib/hooks)
+
+- Hooks that are truly application-wide and domain-agnostic
+- Examples:
+  - `useAuth` - Authentication state management for pages like `members` & `projects`
+  - `useForm`
+  - `useMediaQuery`
+  - `useLocalStorage`
+- These hooks are reusuable across the platform and multiple features, independent of feature specific logic & less likely to change.
+
+#### Feature Hooks (/features/\*/hooks)
+
+- Hooks specifically tied to a feature domain logic
+- Examples:
+  - `/features/events/hooks/useEventRegistration`
+  - `/features/members/hooks/useProfileUpdate`
+  - `/features/members/hooks/useProjectSubmission`
+- These are tightly coupled to a specific feature.
+- We also want to keep them within the feature directory section in case of future updates.
+- You can extend or build upon the functionality of a global hook with a feature hook if needed.
 
 ### Type Safety
 
