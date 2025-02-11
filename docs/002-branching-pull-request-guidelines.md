@@ -58,13 +58,38 @@ Chosen option: Modified GitHub Flow with descriptive branch names and protected 
 
 ### Branch Name Examples:
 
+You can choose between two levels of branch name specificity depending on the scope of your work:
+
+#### Specific Feature Branches
+
+Use this format when working on a focused, single-purpose change:
+
+```bash
+feature/events/calendar-view          # Adding a specific calendar feature
+fix/members/profile-upload            # Fixing profile image upload
+style/ui/button-components            # Updating specific button styles
+docs/adr/branching-guidelines         # Adding specific documentation
+feature/projects/submission-form      # New project submission feature
 ```
-feature/events/add-calendar-view
-fix/members/profile-image-upload
-style/ui/update-button-styles
-docs/global/add-readme
-feature/projects/submission-form
+
+#### General Section Branches
+
+Use this format when making multiple related changes to a section:
+
+```bash
+feature/events                      # Multiple event-related changes
+feature/members                     # Major members section updates
+feature/navigation                  # Navigation system overhaul
+style/ui                            # Global UI refresh
+feature/projects                    # Projects section revamp
 ```
+
+##### Guidelines for Choosing:
+
+- Use specific branches when changes are isolated and focused
+- Use general branches when making multiple related changes
+- Always prefer specific branches unless you have a clear need for a general one
+- Never mix unrelated changes regardless of branch naming style
 
 ## Workflow Steps
 
