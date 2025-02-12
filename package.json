@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@tanstack/router-devtools": "^1.102.5",
+    "@tanstack/router-plugin": "^1.102.6",
     "@types/react": "^18.2.55",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
@@ -19,8 +21,9 @@
     "vite": "^5.1.0"
   },
   "dependencies": {
+    "@tanstack/react-router": "^1.102.5",
+    "lucide-react": "^0.330.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "lucide-react": "^0.330.0"
+    "react-dom": "^18.2.0"
   }
 }
