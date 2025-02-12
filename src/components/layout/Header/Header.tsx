@@ -26,13 +26,24 @@ export default function Header() {
           { name: "Submit Project", href: "/projects/submit" },
         ],
       },
-      { name: "Officers", href: "/officers" },
+      { name: "Members", href: "/members" },
     ],
+  };
+
+  // ! Figure out appropriate types for e and item
+  const handleMobileMenuClick = (e: any, item: any) => {
+    // Preventnavigation for items w/ submenus
+    if (item.submenu) {
+      e.preventDefault();
+      setActiveDropdown(activeDropdown === item.name ? "" : item.name);
+    } else {
+      setIsMenuOpen(false);
+    }
   };
 
   return (
     <header className="w-full bg-gray-800 text-white fixed top-0 z-50">
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Top">
+      <nav className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8" aria-label="Top">
         <div className="flex w-full items-center justify-between py-4">
           {/* Logo */}
           <div className="flex items-center">
@@ -60,7 +71,7 @@ export default function Header() {
 
                 {/* Dropdown Menu */}
                 {item.submenu && activeDropdown === item.name && (
-                  <div className="absolute left-0 mt-2 w-48 rounded-md bg-white py-2 shadow-lg">
+                  <div className="absolute left-0  w-48 rounded-md bg-white py-2 shadow-lg">
                     {item.submenu.map((subItem) => (
                       <a
                         key={subItem.name}
@@ -101,12 +112,7 @@ export default function Header() {
                   <a
                     href={item.href}
                     className="block px-3 py-2 text-base font-medium hover:bg-gray-700"
-                    onClick={() => {
-                      if (!item.submenu) setIsMenuOpen(false);
-                      setActiveDropdown(
-                        activeDropdown === item.name ? "" : item.name
-                      );
-                    }}
+                    onClick={(e) => handleMobileMenuClick(e, item)}
                   >
                     <div className="flex items-center justify-between">
                       {item.name}
