@@ -21,19 +21,29 @@ We will organize components in a hierarchical structure that clearly separates d
 
 ```
 src/
-├── components/                         # Shared components
-│   ├── layout/                        # Layout components
-│   │   ├── Header/                    # Site header with navigation
-│   │   │   ├── Header.tsx
-│   │   │   ├── Header.styles.ts
-│   │   │   └── Header.test.tsx
-│   │   ├── Footer/                    # Site footer
-│   │   └── Sidebar/                   # Optional sidebar
+├── routes/                           # TanStack Router routes
+│   ├── __root.tsx                   # Root layout with navigation (uses layout components)
+│   ├── index.tsx                    # Homepage route
+│   ├── events/                      # Events routes
+│   │   ├── index.tsx               # Events listing
+│   │   ├── [eventId].tsx          # Single event view
+│   │   └── create.tsx             # Event creation form
+│   ├── projects/
+│   ├── members/
+│   └── resources/
+│
+├── components/                       # All components
+│   ├── layout/                      # Layout components used in __root.tsx
+│   │   ├── MainNav/
+│   │   │   ├── MainNav.tsx
+│   │   │   └── MainNav.test.tsx
+│   │   ├── Footer/
+│   │   └── Sidebar/
 │   │
-│   └── shared/                        # Reusable components
-│       ├── EventCard/                 # Event display component
-│       ├── MemberCard/                # Member profile component
-│       └── ProjectShowcase/           # Project display component
+│   └── shared/                      # Reusable components
+│       ├── EventCard/
+│       ├── MemberCard/
+│       └── ProjectShowcase/
 │
 ├── features/                          # Feature-based modules
 │   ├── events/                        # Events feature
@@ -115,64 +125,147 @@ src/
     └── fonts/
 ```
 
-## Key Features and Organization
+# Key Features and Organization
 
-### App Routes
+## App Routes (`/routes`)
 
-- **Events**: Manages club meetings, workshops, and competitions
-- **Projects**: Showcases member projects and collaborative work
-- **Members**: Directory and profiles for club members
-- **Resources**: Learning materials, tutorials, and coding resources
+- **Root** (`__root.tsx`): Application shell with shared navigation and layouts
+- **Events** (`/routes/events/`): Manages club meetings, workshops, and competitions
+  - `index.tsx`: Events listing page
+  - `[eventId].tsx`: Individual event details
+  - `create.tsx`: Event creation form
+- **Projects** (`/routes/projects/`): Showcases member projects and collaborative work
+  - `index.tsx`: Projects gallery
+  - `[projectId].tsx`: Project details page
+  - `submit.tsx`: Project submission form
+- **Members** (`/routes/members/`): Directory and profiles for club members
+  - `index.tsx`: Members directory
+  - `[memberId].tsx`: Member profile page
+- **Resources** (`/routes/resources/`): Learning materials, tutorials, and coding resources
+  - `index.tsx`: Resources listing
+  - `[resourceId].tsx`: Individual resource view
 
-### Component Organization
+## Component Organization
 
-1. **App Components** (`app/_components/`)
-   - Layout components for consistent site structure
-   - Shared components used across multiple routes
-2. **UI Components** (`components/ui/`)
-   - shadcn component library integration or other design systems - if applicable
-   - Consistent design system implementation
-3. **Shared Components** (`components/shared/`)
-   - Reusable utility components
-   - Common interface elements
+1. **Layout Components** (`/components/layout/`)
 
-### Why are there different hook folders?
+   - Core layout components used in `__root.tsx`
+   - Navigation, footer, and structural elements
+   - Example: `MainNav/`, `Footer/`, `Sidebar/`
 
-#### Global Hooks (/lib/hooks)
+2. **UI Components** (`/components/ui/`)
 
-- Hooks that are truly application-wide and domain-agnostic
-- Examples:
-  - `useAuth` - Authentication state management for pages like `members` & `projects`
-  - `useForm`
-  - `useMediaQuery`
-  - `useLocalStorage`
-- These hooks are reusuable across the platform and multiple features, independent of feature specific logic & less likely to change.
+   - shadcn component library integration
+   - Design system fundamentals
+   - Example: `Button/`, `Card/`, `Dialog/`
 
-#### Feature Hooks (/features/\*/hooks)
+3. **Shared Components** (`/components/shared/`)
 
-- Hooks specifically tied to a feature domain logic
-- Examples:
-  - `/features/events/hooks/useEventRegistration`
-  - `/features/members/hooks/useProfileUpdate`
-  - `/features/members/hooks/useProjectSubmission`
-- These are tightly coupled to a specific feature.
-- We also want to keep them within the feature directory section in case of future updates.
-- You can extend or build upon the functionality of a global hook with a feature hook if needed.
+   - Reusable components used across features
+   - Common interface patterns
+   - Example: `DataTable/`, `SearchInput/`, `Pagination/`
 
-### Type Safety
+4. **Feature Components** (`/features/*/components/`)
+   - Feature-specific components
+   - Contained within feature directories
+   - Example: `EventCard/`, `ProjectGallery/`, `MemberProfile/`
 
-- Dedicated types directory for TypeScript definitions
-- Separate type files for each major feature
-- Shared interfaces and utility types
+## Hook Organization
 
-### Styling
+### Global Hooks (`/lib/hooks/`)
 
-- Global SCSS for site-wide styles
-- Tailwind utility classes for component-specific styling
-- shadcn components for consistent UI elements
+Domain-agnostic, application-wide hooks:
 
-### Assets
+```typescript
+// Authentication
+useAuth(); // User authentication state
+usePermissions(); // Permission checking
 
-- Organized public directory for static assets
-- Separate directories for images, icons, and fonts
-- Easy access to frequently used media
+// UI Utilities
+useMediaQuery(); // Responsive design hooks
+useLocalStorage(); // Client-side storage
+useForm(); // Form handling
+
+// Data Fetching
+usePagination(); // Reusable pagination logic
+useInfiniteScroll(); // Infinite scroll behavior
+```
+
+### Feature Hooks (`/features/*/hooks/`)
+
+Feature-specific business logic:
+
+```typescript
+// Events Feature
+useEventRegistration(); // Handle event signup
+useEventFilters(); // Event search/filtering
+
+// Members Feature
+useProfileUpdate(); // Profile editing
+useMemberSearch(); // Member directory search
+
+// Projects Feature
+useProjectSubmission(); // Project upload/submission
+useProjectGallery(); // Project browsing/filtering
+```
+
+## Type Safety
+
+### Global Types (`/types/`)
+
+```typescript
+// Common interfaces
+interface User {
+  id: string;
+  name: string;
+  role: UserRole;
+}
+
+// Utility types
+type AsyncReturnType<T> = T extends (...args: any[]) => Promise<infer R>
+  ? R
+  : any;
+```
+
+### Feature Types (`/features/*/types/`)
+
+```typescript
+// events/types/index.ts
+interface Event {
+  id: string;
+  title: string;
+  date: Date;
+  capacity: number;
+  registrations: Registration[];
+}
+
+// projects/types/index.ts
+interface Project {
+  id: string;
+  title: string;
+  creator: User;
+  technologies: string[];
+}
+```
+
+## Styling
+
+1. **Global Styles**
+
+   - Tailwind configuration
+   - Design tokens and theme variables
+   - Base component styles
+
+2. **Component Styles**
+   - Tailwind utility classes
+   - shadcn component customization
+   - Feature-specific styles when needed
+
+## Assets (`/public/`)
+
+```
+public/
+├── images/
+│   ├── brand/            # Logo and brand assets
+│   ├── icons/            # UI icons
+```
