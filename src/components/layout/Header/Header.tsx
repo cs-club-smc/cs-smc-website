@@ -1,10 +1,10 @@
 export default function Header() {
   return (
-    <div className="w-full">
+    <div className="w-full flex-col flex bg-gray-800 text-white p-4 fixed top-0">
       <ul>
-        <li>item1</li>
-        <li>item2</li>
-        <li>item3</li>
+        <li>Home</li>
+        <li>About</li>
+        <li>Officers</li>
       </ul>
     </div>
   );

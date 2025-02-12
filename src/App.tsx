@@ -1,22 +1,15 @@
-import Counter from "./Counter";
-
-interface MyButtonProps {
-  /** The text to display inside the button */
-  title: string;
-  /** Whether the button can be interacted with */
-  disabled: boolean;
-}
-
-function MyButton({ title, disabled }: MyButtonProps) {
-  return <button disabled={disabled}>{title}</button>;
-}
+import Footer from "./components/layout/Footer/Footer";
+import Header from "./components/layout/Header/Header";
+import { Routes } from "./routes/RouteConfig";
 
 export default function MyApp() {
   return (
-    <div>
-      <h1>Welcome to my app</h1>
-      <MyButton title="I'm a disabled button" disabled={true} />
-      <Counter />
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-grow">
+        <Routes />
+      </main>
+      <Footer />
     </div>
   );
 }
