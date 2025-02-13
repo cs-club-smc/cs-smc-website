@@ -10,23 +10,21 @@ export default function Header() {
       { name: "Home", href: "/" },
       { name: "About", href: "/about" },
       {
-        name: "Events",
-        href: "/events",
+        name: "Announcements",
+        href: "/announcements",
+        // Possible submenu options - keeping for now to keep submenu options below active
+        // - Can remove if need be
         submenu: [
           { name: "Calendar", href: "/events/calendar" },
           { name: "Workshops", href: "/events/workshops" },
           { name: "Past Events", href: "/events/past" },
         ],
       },
+      { name: "Members", href: "/members" },
       {
         name: "Projects",
         href: "/projects",
-        submenu: [
-          { name: "Showcase", href: "/projects/showcase" },
-          { name: "Submit Project", href: "/projects/submit" },
-        ],
       },
-      { name: "Members", href: "/members" },
     ],
   };
 
