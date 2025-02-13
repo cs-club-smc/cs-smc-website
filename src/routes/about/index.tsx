@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail } from "lucide-react";
-import DiscordIcon from "../components/shared/icons/DiscordIcon";
-import GithubIcon from "../components/shared/icons/GithubIcon";
+import DiscordIcon from "../../components/shared/icons/DiscordIcon";
+import GithubIcon from "../../components/shared/icons/GithubIcon";
 
-export const Route = createFileRoute("/about")({
+export const Route = createFileRoute("/about/")({
   component: About,
 });
 
@@ -56,15 +56,15 @@ function About() {
 
       {/* Mission & Vision */}
       <div className="mb-16">
-        <p className="text-xl mb-8">
-          <p className="text-2xl   text-gray-600 text-left">
+        <div className="text-xl mb-8">
+          <p className="text-2xl text-gray-600 text-left">
             We foster an inclusive learning environment where students
             collaborate on real-world projects, develop professional skills, and
             build lasting connections in tech. Whether you're writing your first
             line of code or building full-stack applications, you'll find
             mentorship, resources, and opportunities to grow.
           </p>
-        </p>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="p-6 bg-gray-50 rounded-lg shadow-sm">
             <h3 className="text-xl font-semibold mb-2">Workshops</h3>
