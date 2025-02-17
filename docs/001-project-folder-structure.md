@@ -19,17 +19,28 @@ The application needs a clear and scalable structure for organizing UI component
 
 We will organize components in a hierarchical structure that clearly separates different types of components based on their scope and reusability:
 
+### TanStack Routes:
+
+Reminder!!! Any file under the `routes` folder will automatically be made into a route unless you place `_` before the name
+For more specific information refer to the TanStack docs specifically:
+
+1. https://tanstack.com/router/v1/docs/framework/react/guide/route-trees
+2. https://tanstack.com/router/v1/docs/framework/react/guide/routing-concepts
+
+When in doubt place \_before file & folder names and remove them as you want to create the routes.
+
 ```
 src/
 ├── routes/                           # TanStack Router routes
 │   ├── __root.tsx                   # Root layout with navigation (uses layout components)
 │   ├── index.tsx                    # Homepage route
-│   ├── events/                      # Events routes
+│   ├── members/                      # Events routes
 │   │   ├── index.tsx               # Events listing
 │   │   ├── [eventId].tsx          # Single event view
-│   │   └── create.tsx             # Event creation form
+│   │   └── _components/
+│   │       └── _MemberComponent.tsx # non-routed component for member
+│   │            (The `_` on both the folder & file prevent them from being recognized as routes)
 │   ├── projects/
-│   ├── members/
 │   └── resources/
 │
 ├── components/                       # All components
