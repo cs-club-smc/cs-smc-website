@@ -99,8 +99,6 @@ export interface FileRoutesByFullPath {
   "/announcements": typeof AnnouncementsIndexRoute;
   "/members": typeof MembersIndexRoute;
   "/projects": typeof ProjectsIndexRoute;
-  "/members/MemberComponent": typeof MembersComponentsMemberComponentRoute;
-  "/members/sampleData": typeof MembersDataSampleDataRoute;
 }
 
 export interface FileRoutesByTo {
@@ -109,8 +107,6 @@ export interface FileRoutesByTo {
   "/announcements": typeof AnnouncementsIndexRoute;
   "/members": typeof MembersIndexRoute;
   "/projects": typeof ProjectsIndexRoute;
-  "/members/MemberComponent": typeof MembersComponentsMemberComponentRoute;
-  "/members/sampleData": typeof MembersDataSampleDataRoute;
 }
 
 export interface FileRoutesById {
@@ -120,38 +116,20 @@ export interface FileRoutesById {
   "/announcements/": typeof AnnouncementsIndexRoute;
   "/members/": typeof MembersIndexRoute;
   "/projects/": typeof ProjectsIndexRoute;
-  "/members/_components/MemberComponent": typeof MembersComponentsMemberComponentRoute;
-  "/members/_data/sampleData": typeof MembersDataSampleDataRoute;
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths:
-    | "/"
-    | "/about"
-    | "/announcements"
-    | "/members"
-    | "/projects"
-    | "/members/MemberComponent"
-    | "/members/sampleData";
+  fullPaths: "/" | "/about" | "/announcements" | "/members" | "/projects";
   fileRoutesByTo: FileRoutesByTo;
-  to:
-    | "/"
-    | "/about"
-    | "/announcements"
-    | "/members"
-    | "/projects"
-    | "/members/MemberComponent"
-    | "/members/sampleData";
+  to: "/" | "/about" | "/announcements" | "/members" | "/projects";
   id:
     | "__root__"
     | "/"
     | "/about"
     | "/announcements/"
     | "/members/"
-    | "/projects/"
-    | "/members/_components/MemberComponent"
-    | "/members/_data/sampleData";
+    | "/projects/";
   fileRoutesById: FileRoutesById;
 }
 
@@ -186,8 +164,6 @@ export const routeTree = rootRoute
         "/announcements/",
         "/members/",
         "/projects/",
-        "/members/_components/MemberComponent",
-        "/members/_data/sampleData"
       ]
     },
     "/": {

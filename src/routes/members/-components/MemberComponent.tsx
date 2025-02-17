@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { Member } from "../_data/_sampleData";
+import type { Member } from "../-data/sampleMemberData";
 
 interface MemberComponentProps {
   member: Member;
@@ -14,7 +14,7 @@ export function MemberComponent({ member }: MemberComponentProps) {
     member.projects?.filter((p) => p.status === "completed") || [];
 
   return (
-    <div className="p-6 bg-gray-50 rounded-lg">
+    <div className="p-6 rounded-lg bg-gray-50">
       {/* Member Info */}
       <div className="mb-4">
         <h2 className="text-2xl font-semibold">{member.name}</h2>
@@ -61,9 +61,9 @@ export function MemberComponent({ member }: MemberComponentProps) {
               (project) => (
                 <div
                   key={project.title}
-                  className="border-l-4 border-blue-500 pl-4"
+                  className="pl-4 border-l-4 border-blue-500"
                 >
-                  <div className="flex justify-between items-start">
+                  <div className="flex items-start justify-between">
                     <h3 className="text-lg font-medium">{project.title}</h3>
                     <span className="text-sm text-gray-500">
                       {new Date(project.dateStart).toLocaleDateString()}
@@ -71,13 +71,13 @@ export function MemberComponent({ member }: MemberComponentProps) {
                         ` - ${new Date(project.dateEnd).toLocaleDateString()}`}
                     </span>
                   </div>
-                  <p className="text-gray-600 mt-1">{project.description}</p>
+                  <p className="mt-1 text-gray-600">{project.description}</p>
                   {project.technologies && (
-                    <div className="flex gap-2 mt-2 flex-wrap">
+                    <div className="flex flex-wrap gap-2 mt-2">
                       {project.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="text-sm bg-gray-200 px-2 py-1 rounded"
+                          className="px-2 py-1 text-sm bg-gray-200 rounded"
                         >
                           {tech}
                         </span>
@@ -87,7 +87,7 @@ export function MemberComponent({ member }: MemberComponentProps) {
                   {project.link && (
                     <a
                       href={project.link}
-                      className="text-sm text-blue-600 hover:underline mt-2 inline-block"
+                      className="inline-block mt-2 text-sm text-blue-600 hover:underline"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -99,7 +99,7 @@ export function MemberComponent({ member }: MemberComponentProps) {
             )}
             {(showCompleted ? completedProjects : ongoingProjects).length ===
               0 && (
-              <p className="text-center text-gray-500 py-4">
+              <p className="py-4 text-center text-gray-500">
                 No {showCompleted ? "completed" : "ongoing"} projects
               </p>
             )}
