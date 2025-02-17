@@ -1,11 +1,14 @@
 import { useState } from "react";
 import type { Member } from "../-data/sampleMemberData";
 
-interface MemberComponentProps {
+import { Link, MatchRoute } from "@tanstack/react-router";
+import Spinner from "../../../components/shared/ui/Spinner";
+
+interface MemberProfileProps {
   member: Member;
 }
 
-export function MemberComponent({ member }: MemberComponentProps) {
+export function MemberProfile({ member }: MemberProfileProps) {
   const [showCompleted, setShowCompleted] = useState(false);
 
   const ongoingProjects =
@@ -17,19 +20,49 @@ export function MemberComponent({ member }: MemberComponentProps) {
     <div className="p-6 rounded-lg bg-gray-50">
       {/* Member Info */}
       <div className="mb-4">
-        <h2 className="text-2xl font-semibold">{member.name}</h2>
-        <p className="text-gray-600">{member.role}</p>
-        <p className="text-gray-600">{member.email}</p>
-        {member.portfolioLink && (
-          <a
-            href={member.portfolioLink}
-            className="text-blue-600 hover:underline"
-            target="_blank"
-            rel="noopener noreferrer"
+        <div className="block px-3 py-2">
+          <Link
+            to="/members/$memberId"
+            params={{
+              memberId: member.id,
+            }}
+            className="block px-3 py-2 hover:text-blue-700"
           >
-            Portfolio
-          </a>
-        )}
+            <div className="relative">
+              <MatchRoute
+                to="/members/$memberId"
+                params={{
+                  memberId: member.id,
+                }}
+                pending
+              >
+                {(match) => (
+                  <div className="absolute -left-6">
+                    <Spinner
+                      size="md"
+                      color="primary"
+                      show={!!match}
+                      wait="300"
+                    />
+                  </div>
+                )}
+              </MatchRoute>
+              <h2 className="text-2xl font-semibold">{member.name}</h2>
+            </div>
+          </Link>
+          <p className="text-gray-600">{member.role}</p>
+          <p className="text-gray-600">{member.email}</p>
+          {member.portfolioLink && (
+            <a
+              href={member.portfolioLink}
+              className="text-blue-600 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Portfolio
+            </a>
+          )}
+        </div>
       </div>
 
       {/* Projects Section */}

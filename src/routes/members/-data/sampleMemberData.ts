@@ -11,6 +11,7 @@ export interface Project {
 }
 
 export interface Member {
+  id: string;
   name: string;
   role: string;
   email: string;
@@ -20,6 +21,7 @@ export interface Member {
 
 export const sampleMembers: Member[] = [
   {
+    id: "1",
     name: "John Doe",
     role: "President",
     email: "john.doe@email.com",
@@ -47,6 +49,7 @@ export const sampleMembers: Member[] = [
     ],
   },
   {
+    id: "2",
     name: "Jane Smith",
     role: "Vice President",
     email: "jane.smith@email.com",
@@ -63,6 +66,7 @@ export const sampleMembers: Member[] = [
     ],
   },
   {
+    id: "3",
     name: "Jake TyCyn Schmidt",
     role: "Officer - Website Project Manager",
     email: "jaketycyn@gmail.com",
