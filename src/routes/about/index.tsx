@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Mail } from "lucide-react";
-import DiscordIcon from "../../components/shared/icons/DiscordIcon";
-import GithubIcon from "../../components/shared/icons/GithubIcon";
+import DiscordIcon from "../../assets/images/icons/DiscordIcon";
+import GithubIcon from "../../assets/images/icons/GithubIcon";
 
 export const Route = createFileRoute("/about/")({
   component: About,

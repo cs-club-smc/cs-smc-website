@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import DiscordIcon from "../components/shared/icons/DiscordIcon";
+import DiscordIcon from "../assets/images/icons/DiscordIcon";
 
 export const Route = createFileRoute("/")({
   component: Index,
