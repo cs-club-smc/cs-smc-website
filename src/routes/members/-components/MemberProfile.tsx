@@ -3,18 +3,26 @@ import type { Member } from "../-data/sampleMemberData";
 
 import { Link, MatchRoute } from "@tanstack/react-router";
 import Spinner from "../../../components/shared/ui/Spinner";
+import { Project } from "../../projects/-data/sampleProjectData";
 
 interface MemberProfileProps {
   member: Member;
+  projects: Record<string, Project>;
 }
 
-export function MemberProfile({ member }: MemberProfileProps) {
+export function MemberProfile({ member, projects }: MemberProfileProps) {
   const [showCompleted, setShowCompleted] = useState(false);
 
+  // get projects from projectIds
+  const memberProjects = member.projectIds
+    .map((id) => projects[id])
+    .filter(Boolean);
+
+  // filter ongoing and completed projects
   const ongoingProjects =
-    member.projects?.filter((p) => p.status === "ongoing") || [];
+    memberProjects?.filter((p) => p.status === "ongoing") || [];
   const completedProjects =
-    member.projects?.filter((p) => p.status === "completed") || [];
+    memberProjects?.filter((p) => p.status === "completed") || [];
 
   return (
     <div className="p-6 rounded-lg bg-gray-50">
@@ -66,7 +74,7 @@ export function MemberProfile({ member }: MemberProfileProps) {
       </div>
 
       {/* Projects Section */}
-      {member.projects && member.projects.length > 0 && (
+      {memberProjects && memberProjects.length > 0 && (
         <div className="mt-4">
           {/* Project Type Toggle */}
           <div className="flex gap-4 mb-4">
