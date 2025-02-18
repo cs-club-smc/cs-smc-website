@@ -6,83 +6,78 @@
 
 ## Context and Problem Statement
 
-The application needs a clear and scalable structure for organizing UI components, backend API calls, & any future libraries or other implementations as we scale.
+The application needs a clear and scalable structure for organizing UI components, backend API calls, & any future libraries or other implementations as we scale, with special consideration for TanStack Router's file-based routing conventions.
 
 ## Decision Drivers
 
 - Need to maintain clear separation between front and backend
 - Need to distinguish between app-wide and feature-specific components
-- Want to follow Typesafety conventions & best practices
-- Want to make it easy for new developers to understand where components belong & where they can easily add features to while not creating redundant feature.
+- Need to maintain clear separation between routes and non-route components
+- Want to make it easy for new developers to understand where components belong
 
 ## Decision
 
-We will organize components in a hierarchical structure that clearly separates different types of components based on their scope and reusability:
+We will organize components in a hierarchical structure that clearly separates routes from other components while maintaining proximity for related code:
 
-```
-src/
-├── components/                         # Shared components
-│   ├── layout/                        # Layout components
-│   │   ├── Header/                    # Site header with navigation
-│   │   │   ├── Header.tsx
-│   │   │   ├── Header.styles.ts
-│   │   │   └── Header.test.tsx
-│   │   ├── Footer/                    # Site footer
-│   │   └── Sidebar/                   # Optional sidebar
+### Route Structure & Conventions:
+
+Important file/folder prefix meanings:
+
+- `__root.tsx`: The root layout component (required)
+- `_`: Pathless/layout routes that wrap other routes (e.g., `_layout.tsx`)
+- `-`: Files/folders to exclude from routing (default convention)
+- `[param]`: Dynamic route parameters(e.g., `[userId].tsx`)
+- `index.tsx`: Default route for a directory
+
+**When in doubt** if you want something routed to place `-` infront of the file so it **DOES NOT** get included into routing
+
+For more specific information refer to the TanStack docs specifically:
+
+1. https://tanstack.com/router/v1/docs/framework/react/guide/route-trees
+2. https://tanstack.com/router/v1/docs/framework/react/guide/routing-concepts
+3. https://tanstack.com/router/v1/docs/framework/react/guide/file-based-routing
+
+```src/
+├── routes/                           # All route components
+│   ├── __root.tsx                   # Root layout (required)
+│   ├── index.tsx                    # Homepage route
 │   │
-│   └── shared/                        # Reusable components
-│       ├── EventCard/                 # Event display component
-│       ├── MemberCard/                # Member profile component
-│       └── ProjectShowcase/           # Project display component
-│
-├── features/                          # Feature-based modules
-│   ├── events/                        # Events feature
-│   │   ├── components/               # Event-specific components
-│   │   │   ├── EventCalendar/
-│   │   │   └── EventRegistration/
-│   │   ├── hooks/                    # Event-related hooks
-│   │   ├── services/                 # Event-related services
-│   │   ├── store/                    # Event state management
-│   │   ├── types/                    # Event type definitions
-│   │   └── routes/                   # Event routes
-│   │       ├── EventList.tsx         # Events listing
-│   │       └── EventDetail.tsx       # Single event view
+│   ├── members/                     # Members feature routes
+│   │   ├── index.tsx               # /members route
+│   │   ├── [memberId].tsx          # /members/[id] route
+│   │   ├── _layout.tsx             # Shared layout for member routes
+│   │   │
+│   │   ├── -components/            # Non-route member components
+│   │   │   ├── MemberCard.tsx
+│   │   │   └── ProfileEditor.tsx
+│   │   │
+│   │   └── -utils/                 # Non-route member utilities
+│   │       └── validation.ts
 │   │
-│   ├── projects/                     # Projects feature
-│   │   ├── components/
-│   │   │   ├── ProjectGallery/
-│   │   │   └── ProjectSubmission/
-│   │   ├── hooks/
-│   │   ├── services/
-│   │   ├── store/
-│   │   ├── types/
-│   │   └── routes/
+│   ├── projects/                    # Projects feature routes
+│   │   ├── index.tsx               # /projects route
+│   │   ├── [projectId].tsx         # /projects/[id] route
+│   │   ├── create.tsx              # /projects/create route
+│   │   │
+│   │   └── -components/            # Non-route project components
+│   │       ├── ProjectForm.tsx
+│   │       └── ProjectCard.tsx
 │   │
-│   ├── members/                      # Members feature
-│   │   ├── components/
-│   │   │   ├── MemberDirectory/
-│   │   │   └── ProfileEditor/
-│   │   ├── hooks/
-│   │   ├── services/
-│   │   ├── store/
-│   │   ├── types/
-│   │   └── routes/
+│   └── resources/                   # Resources feature routes
+│       ├── index.tsx
+│       ├── [resourceId].tsx
+│       │
+│       └── -components/            # Non-route resource components
+│           └── ResourceCard.tsx
+├── components/                      # Shared components
+│   ├── ui/                         # Base UI components
+│   │   ├── Button/
+│   │   └── Card/
 │   │
-│   └── resources/                    # Resources feature
-│       ├── components/
-│       │   ├── ResourceCard/
-│       │   └── TutorialViewer/
-│       ├── hooks/
-│       ├── services/
-│       ├── store/
-│       ├── types/
-│       └── routes/
-│
-├── lib/                              # Shared utilities and helpers
-│   ├── api/                         # API client configuration
-│   │   ├── client.ts
-│   │   └── endpoints.ts
-│   │
+│   └── layout/                     # Layout components
+│       ├── Header/
+│       └── Footer/
+└── lib/                            # Shared utilities
 │   ├── hooks/                       # Shared custom hooks
 │   │   ├── useAuth.ts
 │   │   └── useForm.ts
@@ -104,10 +99,6 @@ src/
 │   ├── common.ts
 │   └── api.ts
 │
-├── routes/                          # Application routing
-│   ├── RouteConfig.tsx              # Route definitions
-│   └── PrivateRoute.tsx            # Auth wrapper
-│
 └── assets/                          # Static assets
     ├── images/
     │   ├── logo.svg
@@ -115,64 +106,64 @@ src/
     └── fonts/
 ```
 
-## Key Features and Organization
+### Key Conventions:
 
-### App Routes
+1. **Route Organization**
 
-- **Events**: Manages club meetings, workshops, and competitions
-- **Projects**: Showcases member projects and collaborative work
-- **Members**: Directory and profiles for club members
-- **Resources**: Learning materials, tutorials, and coding resources
+   - All routes live in the `routes/` directory
+   - Each feature has its own directory (e.g., `routes/members/`)
+   - Use `-` prefix for non-route files/folders within route directories
+   - Use `_` prefix for layout/wrapper routes
+   - Use `[param]` for dynamic route parameters
 
-### Component Organization
+2. **Component Organization**
 
-1. **App Components** (`app/_components/`)
-   - Layout components for consistent site structure
-   - Shared components used across multiple routes
-2. **UI Components** (`components/ui/`)
-   - shadcn component library integration or other design systems - if applicable
-   - Consistent design system implementation
-3. **Shared Components** (`components/shared/`)
-   - Reusable utility components
-   - Common interface elements
+   - Feature-specific components live in `-components/` within their feature directory
+   - Shared components live in the top-level `components/` directory
+   - UI components live in `components/ui/`
 
-### Why are there different hook folders?
+3. **File Naming**
+   - Routes: `index.tsx`, `[param].tsx`, `_layout.tsx`
+   - Components: `PascalCase.tsx`
+   - Utilities: `camelCase.ts`
 
-#### Global Hooks (/lib/hooks)
+## Benefits
 
-- Hooks that are truly application-wide and domain-agnostic
-- Examples:
-  - `useAuth` - Authentication state management for pages like `members` & `projects`
-  - `useForm`
-  - `useMediaQuery`
-  - `useLocalStorage`
-- These hooks are reusuable across the platform and multiple features, independent of feature specific logic & less likely to change.
+- Clear separation between routes and components
+- Feature-related code stays together
+- Easy to understand routing conventions
+- Scalable structure for large applications
+- Follows TanStack Router best practices
 
-#### Feature Hooks (/features/\*/hooks)
+## Implementation Notes
 
-- Hooks specifically tied to a feature domain logic
-- Examples:
-  - `/features/events/hooks/useEventRegistration`
-  - `/features/members/hooks/useProfileUpdate`
-  - `/features/members/hooks/useProjectSubmission`
-- These are tightly coupled to a specific feature.
-- We also want to keep them within the feature directory section in case of future updates.
-- You can extend or build upon the functionality of a global hook with a feature hook if needed.
+1. Always use the `-` prefix for non-route files/folders within the routes directory
+2. Keep route components focused on routing/layout logic
+3. Move complex component logic to separate files in `-components/`
+4. Use `_layout.tsx` for shared layouts within a feature
 
-### Type Safety
+## Examples
 
-- Dedicated types directory for TypeScript definitions
-- Separate type files for each major feature
-- Shared interfaces and utility types
+### Good:
 
-### Styling
+```
+routes/
+  members/
+    index.tsx                # /members route
+    [memberId].tsx          # /members/[id] route
+    -components/
+      MemberProfile.tsx     # Not a route
+    -utils/
+      memberHelpers.ts      # Not a route
+```
 
-- Global SCSS for site-wide styles
-- Tailwind utility classes for component-specific styling
-- shadcn components for consistent UI elements
+### Bad:
 
-### Assets
-
-- Organized public directory for static assets
-- Separate directories for images, icons, and fonts
-- Easy access to frequently used media
+```
+routes/
+  members/
+    index.tsx
+    [memberId].tsx
+    components/             # ❌ Missing `-` prefix
+      MemberProfile.tsx     # Will try to become a route!
+```
